@@ -3,11 +3,20 @@ import sys
 import os
 import getpass
 import pymysql as sql
+import admin as ad
+import configparser
 
 debug_Mode = False
 
 def start_conn():
-    conn = sql.connect(user='rhitayu', password='hashed',host='localhost',database='cloud_computing',charset='utf8mb4')
+    conf = configparser.ConfigParser()
+    conf.read_file(open('GFS.conf'))
+    username = conf.get('database','user_name')
+    passwd = conf.get('database','password')
+    db = conf.get('database', 'db')
+    host = conf.get('database', 'host')
+    charset = conf.get('database','charset')
+    conn = sql.connect(user=username, password=passwd,host=host,database=db,charset=charset)
     cursor = conn.cursor()
     cursor.execute("SELECT DATABASE()")
     data = cursor.fetchone()
