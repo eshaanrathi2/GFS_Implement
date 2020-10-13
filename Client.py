@@ -3,7 +3,6 @@ import sys
 import os
 import getpass
 import pymysql as sql
-import admin as ad
 import configparser
 
 debug_Mode = False
@@ -38,7 +37,7 @@ def authenticate_user():
         print("[!] Authenticated")
         return 1
     else:
-        print("[-] Passwords didn'y match")
+        print("[-] Passwords didn't match")
         return -1
 
 def send_to_minion(block_uuid,data,minions):
