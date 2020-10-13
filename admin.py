@@ -4,6 +4,7 @@ import pymysql as sql
 import configparser
 import getpass
 import sys
+import hashlib
 
 def start_conn():
     conf = configparser.ConfigParser()
@@ -28,9 +29,9 @@ def create_new_user(conn):
     pass1 = getpass.getpass()
     pass2 = getpass.getpass()
     if pass1 == pass2:
-        hashed_pass = hash(pass1)
+        hashed_pass = hashlib.md5(pass1.encode())
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO user_info values(%s,%s)",(user_name, str(hashed_pass)))
+        cursor.execute("INSERT INTO user_info values(%s,%s)",(user_name, str(hashed_pass.hexdigest())))
         conn.commit()
     else:
         print("[-] Entered Passwords didn't match")

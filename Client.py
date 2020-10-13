@@ -4,6 +4,7 @@ import os
 import getpass
 import pymysql as sql
 import configparser
+import hashlib
 
 debug_Mode = False
 
@@ -25,16 +26,16 @@ def start_conn():
 def authenticate_user():
     user_name = input("[!] Enter Username: ")
     password = getpass.getpass()
-    hashed_pass = hash(password)
+    hashed_pass = hashlib.md5(password.encode())
     conn = start_conn()
     cursor = conn.cursor()
     cursor.execute("select hashed_pass from user_info where user_name like %s",(user_name))
     pass_from_db = cursor.fetchone()
-    hash_pfd = hash(pass_from_db[0])
-    # print(hashed_pass)
+    hash_pfd = pass_from_db[0]
+    # print(hashed_pass.hexdigest())
     # print(hash_pfd)
-    if hashed_pass == hash_pfd:
-        print("[!] Authenticated")
+    if hashed_pass.hexdigest() == hash_pfd:
+        print("[+] Authenticated")
         return 1
     else:
         print("[-] Passwords didn't match")
