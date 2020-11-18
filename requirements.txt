@@ -1,0 +1,3 @@
+plumbum==1.6.9
+PyMySQL==0.10.1
+rpyc==4.1.5
