@@ -15,7 +15,7 @@ Implementation with Python 3. [**Implemented using this GitHub repo**](https://g
 
 * **Setting up Database:**
     * Set up a MySQL `<user_name>` and `<password>`.
-    * Create a database in MySQL. `create database db_name`
+    * Create a database in MySQL. `create database <db_name>`
     * Import the database file in the repository.  `mysql -u <username> -p <db_name> <  dump_file.sql `.
 
 * **Installing Requirements**
