@@ -2,6 +2,8 @@ import rpyc
 import sys
 import os
 import auth
+import time
+
 
 debug_Mode = False
 
@@ -102,9 +104,17 @@ def list_files(master):
 
 
 def main(args):
-    auth_flag = auth.authenticate_user()
-    if auth_flag == -1:
-        sys.exit(0)
+    if len(args) == 0:
+        print("------ Help on Usage -------")
+        print("To upload : Client.py put Destination/to/the/src/file  Name_of_the_file_in_the_GFS ")
+        print("To download: Client.py get Name_of_the_file_in_the_GFS")
+        print("To delete: Client.py delete Name_of_the_file_in_the_GFS")
+        print("To overwite: Client.py put Destination/to/the/src/file Name_of_the_file_in_the_GFS")
+        return
+        
+    # auth_flag = auth.authenticate_user()
+    # if auth_flag == -1:
+    #     sys.exit(0)
 
     try:
         con = rpyc.connect("localhost", port=2131)
@@ -114,13 +124,7 @@ def main(args):
         print("launch Master Server and try again")
         return
 
-    if len(args) == 0:
-        print("------ Help on Usage -------")
-        print("To upload : Client.py put Destination/to/the/src/file  Name_of_the_file_in_the_GFS ")
-        print("To download: Client.py get Name_of_the_file_in_the_GFS")
-        print("To delete: Client.py delete Name_of_the_file_in_the_GFS")
-        print("To overwite: Client.py put Destination/to/the/src/file Name_of_the_file_in_the_GFS")
-        return
+    init_time = time.time()
 
     if args[0] == "get":
       get(master, args[1])
@@ -137,6 +141,10 @@ def main(args):
       print("To download: Client.py get Name_of_the_file_in_the_GFS")
       print("To delete: Client.py delete Name_of_the_file_in_the_GFS")
       print("To overwite: Client.py put Destination/to/the/src/file Name_of_the_file_in_the_GFS")
+
+    final_time = time.time()
+    print(f"The time required: {format(final_time - init_time, '0.2f')} seconds")
+     
 
 
 if __name__ == "__main__":

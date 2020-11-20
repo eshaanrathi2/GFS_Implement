@@ -30,7 +30,11 @@ def authenticate_user():
     conn = start_conn()
     cursor = conn.cursor()
     cursor.execute("select hashed_pass from user_info where user_name like %s",(user_name))
-    pass_from_db = cursor.fetchone()[0]
+    try:
+        pass_from_db = cursor.fetchone()[0]
+    except:
+        print("[-] Invalid Username")
+        return -1
     if hashed_pass.hexdigest() == pass_from_db:
         print("[+] Authenticated")
         return 1
