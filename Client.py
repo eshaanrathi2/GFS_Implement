@@ -105,7 +105,7 @@ def main(args):
     auth_flag = auth.authenticate_user()
     if auth_flag == -1:
         sys.exit(0)
-    
+
     try:
         con = rpyc.connect("localhost", port=2131)
         master = con.root.Master()

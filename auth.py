@@ -2,6 +2,7 @@ import getpass
 import pymysql as sql
 import configparser
 import hashlib
+import sys
 
 def start_conn():
     conf = configparser.ConfigParser()
@@ -11,7 +12,11 @@ def start_conn():
     db = conf.get('database', 'db')
     host = conf.get('database', 'host')
     charset = conf.get('database','charset')
-    conn = sql.connect(user=username, password=passwd,host=host,database=db,charset=charset)
+    try:
+        conn = sql.connect(user=username, password=passwd,host=host,database=db,charset=charset)
+    except:
+        print("[-] MySQL Server is currently not running...")
+        sys.exit(0)
     cursor = conn.cursor()
     cursor.execute("SELECT DATABASE()")
     data = cursor.fetchone()
