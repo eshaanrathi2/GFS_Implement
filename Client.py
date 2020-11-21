@@ -112,9 +112,9 @@ def main(args):
         print("To overwite: Client.py put Destination/to/the/src/file Name_of_the_file_in_the_GFS")
         return
         
-    # auth_flag = auth.authenticate_user()
-    # if auth_flag == -1:
-    #     sys.exit(0)
+    auth_flag = auth.authenticate_user()
+    if auth_flag == -1:
+        sys.exit(0)
 
     try:
         con = rpyc.connect("localhost", port=2131)
