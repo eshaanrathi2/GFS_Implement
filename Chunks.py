@@ -3,7 +3,7 @@ import os
 
 from rpyc.utils.server import ThreadedServer
 
-debug_Mode = False
+debug_Mode = True
 
 DATA_DIR = os.path.expanduser("~")
 DATA_DIR += "/gfs_root/"
